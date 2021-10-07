@@ -4,17 +4,16 @@ function LoadUser(){
     fetch(url)
     .then((response) => response.json())
     .then(data => {
-        let fn = document.getElementById ("firstName")
-        let ln = document.getElementById ("lastName")
-        let phone = document.getElementById ("phone")
-        let img = document.getElementById ("userImg")
+        let fn = document.getElementById("firstName")
+        let ln = document.getElementById("lastName")
+        let phone = document.getElementById("phone")
+        let img = document.getElementById("userImg")
 
         fn.innerHTML = data.results[0].name.first
         ln.innerHTML = data.results[0].name.last
         phone.innerHTML = data.results[0].phone
         img.src = data.results[0].picture.large
-
-    })  
+    })
 }
 
 let elLoadUser = document.getElementById("getRandomUser")
@@ -22,72 +21,70 @@ elLoadUser.addEventListener("click", function(){
     LoadUser()
 })
 
-let elMultipleUsers = document.getElementById("getMultipleUser")
-elLoadMultipleUsers.addEventListener("click", function(){
+let elLoadMultipleUsers = document.getElementById("getMultipleUser")
+elLoadMultipleUsers.addEventListener("click",function(){
+    let userCount = document.getElementById("userCount")
     LoadMultipleUsers(userCount.value)
 })
 
 function LoadMultipleUsers(userCount){
-    let url = "https://randomuser.me/api/?results" + userCount
+    let url = "https://randomuser.me/api/?results=" + userCount
     let temp = ""
 
     fetch(url)
     .then((response) => response.json())
-    .then(data =>{
+    .then(azad => {
         let allUsers = document.getElementById("allUsers")
-        //cass.data[0].category_list.name - depends on API
-        for(let  i= 0; i < data.results.length; i++){
-            let fn = '<div>' + data.results[i].name.first + '</div>'
-            let ln = '<div>' + data.results[i].name.last + '</div>'
-            let phone = '<div>' + data.results[i].phone + '</div>'
-            let img = '<img src="' + data.results[i].picture.large + '">'
+        
+        for(let i = 0; i < azad.results.length; i++){
+            let fn = '<div>' + azad.results[i].name.first + '</div>'
+            let ln = '<div>' + azad.results[i].name.last + '</div>'
+            let phone = '<div>' + azad.results[i].phone + '</div>'
+            let img = '<img src="' + azad.results[i].picture.large + '">'
 
-        temp = temp + fn + ln + phone + img
+            temp = temp + fn + ln + phone + img
         }
-        allUsers.innerHTML = temp
+        allUsers.innerHTML = temp        
     })
 }
 
 let elLoadGender = document.getElementById("getGenderUser")
 elLoadGender.addEventListener("click",function(){
-    console.log("Load Gender Clicked!")
-
-    //get the gender
+    console.log("Load Gender clicked!")
+    // get the gender
     let gender = document.getElementById("userGender")
     console.log("Selected Gender: " + gender.value)
 
-    //get the number of result
-    let count= document.getElementById("userGenderCount")
+    // get the number of result
+    let count = document.getElementById("userGenderCount")
     console.log("Count: " + count.value)
 
-    //call loadGender() and pass gender and number of results
-    loadGender(gender.value, count.value)
+    // call loadGender() and pass gender and number of result
+    loadGender(gender.value,count.value)
 })
 
-function loadGender(gender,userCount){
-    let url = "https://randomuser.me/api/?results" + userCount + "&gender" + gender
+function loadGender(gender, userCount){
+    let url = "https://randomuser.me/api/?results=" + userCount + "&gender=" + gender
     console.log(url)
 
     //call fetch, loop the result, and change the innerHTML for allGenderUsers
-   fetch(url)
-   .then(response => response.json())
-   .then(data => {
-       //console.log(data)
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
         let resultDiv = document.getElementById("allGenderUsers")
-        let temp =""
+        let temp = ""
 
-        for(let  i= 0; i < data1.results.length; i++){
-            let fn = '<div>' + data1.results[i].name.first + '</div>'
-            let ln = '<div>' + data1.results[i].name.last + '</div>'
-            let phone = '<div>' + data1.results[i].phone + '</div>'
-            let img = '<img src="' + data1.results[i].picture.large + '">'
-            let gdr = '<div>' + data1.results[i].gender + '</div>'
+        for(let i = 0; i < data.results.length; i++){
+            let fn = '<div>' + data.results[i].name.first + '</div>'
+            let ln = '<div>' + data.results[i].name.last + '</div>'
+            let phone = '<div>' + data.results[i].phone + '</div>'
+            let img = '<img src="' + data.results[i].picture.large + '">'
+            let gdr = '<div>' + data.results[i].gender + '</div>'
 
-        temp = temp + fn + ln + phone + gdr + img
-        }     
+            temp = temp + fn + ln + phone + gdr + img
+        }
         
-   })
-   })  
+        resultDiv.innerHTML = temp
 
-
+    })
 }
